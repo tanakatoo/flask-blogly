@@ -12,9 +12,15 @@ def connect_db(app):
 
 class User(db.Model):
     """User Model"""
-    __tablename__="User"
+    __tablename__="users"
+    
     def __repr__(self):
-        return f""
+        return f"<id={self.id} first_name={self.first_name} last_name={self.last_name} image_url={self.image_url}"
+    
+    id=db.Column(db.Integer,
+                 primary_key=True,
+                 autoincrement=True
+                 )
     
     id=db.column(db.Integer,
                  primary_key=True,
