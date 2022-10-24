@@ -2,14 +2,18 @@
 
 {% block title %}Add User{% endblock %}
 {% block content %}
-<h1>Create a User</h1>
-<form action="/users/new" method="POST">
-    <label for="firstName">First Name</label>
-    <input type="text" name="firstName" />
-    <label for="lastName">Last Name</label>
-    <input type="text" name="lastName" />
-    <label for="imageURL">Image URL</label>
-    <input type="URL" name="imageURL" />
-    <button>Add</button>
-</form>
+<div class="container">
+    <div class="row">
+        <h1>Create a User</h1>
+        <form action="/users/new" method="POST">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" name="firstName" class="form-control" />
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" name="lastName" class="form-control" />
+            <label for="imageURL" class="form-label">Image URL</label>
+            <textarea type="URL" name="imageURL" class="form-control"></textarea>
+            <button class="btn btn-success">Add</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
