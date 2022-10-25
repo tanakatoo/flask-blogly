@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row">
         <h1>Edit a user</h1>
-        <form action="/users/{{user.id}}}/edit" method="POST">
+        <form action="/users/{{user.id}}/edit" method="POST">
             <label for="firstName" class="form-label">First Name</label>
             <input type="text" name="firstName" value="{{user.first_name}}" class="form-control" />
             <label for="lastName" class="form-label">Last Name</label>
@@ -13,8 +13,9 @@
             <label for="imageURL" class="form-label">Image URL</label>
             <textarea type="URL" name="imageURL" value="{{user.image_url}}" rows="3"
                 class="form-control">{{user.image_url}}</textarea>
-            <button class="btn" id="cancelBtn">Cancel</button>
+            <button class="btn btn-secondary" id="cancelBtn"><a href="/users">Cancel</a></button>
             <button class="btn btn-success" id="saveBtn">Save</button>
+            <button class="btn btn-warning"><a href="/users/{{user.id}}/edit">Reset</a></button>
         </form>
     </div>
 </div>

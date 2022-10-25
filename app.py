@@ -3,6 +3,13 @@ from flask import Flask, request, jsonify, redirect, render_template, flash, ses
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, User
 
+# controller layer
+# instanciate a controller for each domain entity (user controller, a class)
+# controller.newUser, import of models
+# when it's done, communicate back to this layer
+
+# more layers, another one aggregation layer/store layer
+# ability to grab a bunch of different tables the same time
 
 
 app = Flask(__name__)
@@ -14,8 +21,8 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS']= False
 debug=DebugToolbarExtension(app)
 
 connect_db(app)
-db.drop_all()
-db.create_all()
+# db.drop_all()
+# db.create_all()
 
 @app.route('/')
 def home():
@@ -38,6 +45,7 @@ def new_user_db():
     last_name = request.form["lastName"]
     image_url = request.form["imageURL"]
     user=User(first_name=first_name,last_name=last_name,image_url=image_url)
+    # put this in the model?
     db.session.add(user)
     db.session.commit()
     return redirect ('/users')
@@ -54,13 +62,19 @@ def user_edit(userid):
     #get user from userid then display in template
     return render_template('editUsers.html', user=user_details)
 
-@app.route('/users/<int:userid>', methods=['POST'])
+@app.route('/users/<int:userid>/edit', methods=['POST'])
 def user_edit_db(userid):
+
     #update user info in db and then display users page
     first_name = request.form["firstName"]
     last_name = request.form["lastName"]
     image_url = request.form["imageURL"]
-    user=User(first_name=first_name,last_name=last_name,image_url=image_url)
+    user=User.get_user(userid)
+    user.first_name=first_name
+    user.last_name=last_name
+    user.image_url=image_url
+    # user=User(first_name=first_name,last_name=last_name,image_url=image_url)
+    # put this in the model??
     db.session.add(user)
     db.session.commit()
     return redirect('/users')
@@ -68,4 +82,7 @@ def user_edit_db(userid):
 @app.route('/users/<int:userid>/delete', methods=["POST"])
 def user_delete(userid):
     #deete user from db and display /users listing
+    user=User.get_user(userid)
+    db.session.delete(user)
+    db.session.commit()
     return redirect('/users')

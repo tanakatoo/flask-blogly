@@ -9,10 +9,7 @@
             <img src="{{user.image_url}}">
         </div>
         <div class="col">
-
-            <form action=" /users/{{user.id}}/edit">
-                <button class="btn btn-primary">Edit</button>
-            </form>
+            <button class="btn btn-primary"><a href="/users/{{user.id}}/edit">Edit</a></button>
 
             <form action="/users/{{user.id}}/delete" method="POST">
                 <button class="btn btn-danger ">Delete</button>

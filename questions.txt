@@ -1,5 +1,4 @@
-Working on blogly, please look at my models.py, 
-the get_all_users doesn't return anything for some reason in ipython, but works fine in the app
+
 https://github.com/tanakatoo/flask-blogly
 
 If we seed data using the csv, does flask know to where to start the auto-increment id? It doesn't look like it knows, and
