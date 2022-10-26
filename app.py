@@ -32,6 +32,9 @@ def home():
 def list_users():
     #all_users=User.query.all()
     all_users=User.get_all_users()
+
+    print('*******')
+    print(all_users)
     return render_template('userListing.html', all_users=all_users)
 
 @app.route('/users/new')
@@ -53,14 +56,17 @@ def new_user_db():
 @app.route('/users/<int:userid>')
 def user_details(userid):
     user_details=User.get_user(userid)
+    
     #get user from userid then display in template
     return render_template('userDetails.html', user=user_details)
 
 @app.route('/users/<int:userid>/edit')
 def user_edit(userid):
+    #get user from userid and posts then display in template
     user_details=User.get_user(userid)
-    #get user from userid then display in template
-    return render_template('editUsers.html', user=user_details)
+    posts=user_details.posts
+    
+    return render_template('editUsers.html', user=user_details, posts=posts)
 
 @app.route('/users/<int:userid>/edit', methods=['POST'])
 def user_edit_db(userid):

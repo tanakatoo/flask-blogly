@@ -14,8 +14,8 @@ db.create_all()
 class TestRoutes(TestCase):
     @classmethod
     def setUpClass(cls):
-        User.query.delete()
         # make a new user
+        User.query.delete()
         user=User(first_name="Karmen",last_name="Too",image_url="https://eloquentjavascript.net/img/chapter_picture_6.jpg")
         db.session.add(user)
         db.session.commit()

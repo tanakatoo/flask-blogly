@@ -12,3 +12,11 @@ Can we put all calls to the db (queries, adding, deleting data) be inside the mo
 Colt doesn't do that. App.py should only define routes and anything related to the db should be done in models.py?
 
 Check my User Details page. 2 routes, 2 forms? Each route needs a form?
+
+When do we use class methods and when do we use normal methods?
+we are introduced to @property
+what others are there that we should know?
+
+testing:
+doesn't run in flask
+trying to setup in vscode, sometimes it runs sometimes it doesn't

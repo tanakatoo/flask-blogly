@@ -3,18 +3,27 @@
 {% block title %}User Details{% endblock %}
 {% block content %}
 <div class="container">
-    <h1>{{user.first_name}} {{user.last_name}}</h1>
+
     <div class="row">
         <div class="col-2">
             <img src="{{user.image_url}}">
         </div>
         <div class="col">
+            <h1>{{full_name}}</h1>
             <button class="btn btn-primary"><a href="/users/{{user.id}}/edit">Edit</a></button>
-
             <form action="/users/{{user.id}}/delete" method="POST">
                 <button class="btn btn-danger ">Delete</button>
             </form>
-
+            {% if posts %}
+            <div class="row">
+                <h2>Posts</h2>
+                <ul>
+                    {% for p in posts %}
+                    <li>{{posts.title}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
