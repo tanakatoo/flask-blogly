@@ -112,7 +112,7 @@ class TestRoutes(TestCase):
     
     def test_post_delete(self):
         with app.test_client() as client:
-            res=client.post('/posts/1/delete', follow_redirects=True)
+            res=client.post('/posts/1/delete', data={'userid': '1'},follow_redirects=True)
             html=res.get_data(as_text=True)
             
             self.assertEqual(res.status_code,200)
