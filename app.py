@@ -15,11 +15,6 @@ from models import db, connect_db, User, Post
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
 app.config['SQLALCHEMY_ECHO'] = True
-if app.config['TESTING']:
-    
-    app.config['SQLALCHEMY_DATABASE_URI']='postgresql:///blogly-test'
-    app.config['SQLALCHEMY_ECHO']=False
-    app.config['DEBUG_TB_HOSTS']=['dont-show-debug-toolbar']
 
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -39,9 +34,6 @@ def home():
 def list_users():
     #all_users=User.query.all()
     all_users=User.get_all_users()
-
-    print('*******')
-    print(all_users)
     return render_template('userListing.html', all_users=all_users)
 
 @app.route('/users/new')
