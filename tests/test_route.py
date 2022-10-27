@@ -12,11 +12,11 @@ app.config['DEBUG_TB_HOSTS']=['dont-show-debug-toolbar']
 
 
 class TestRoutes(TestCase):
-    @classmethod
-    def setUpClass(cls):
+    def setUp(self):
         # make a new user and post
         db.drop_all()
         db.create_all()
+        print('************dropping and creting all tables again *****************')
         user=User(first_name="Karmen",last_name="Too",image_url="https://eloquentjavascript.net/img/chapter_picture_6.jpg")
         post=Post(title="First Post",author=1,content="First post content")
         db.session.add(user)
@@ -24,8 +24,7 @@ class TestRoutes(TestCase):
         db.session.add(post)
         db.session.commit()
     
-    @classmethod
-    def tearDownClass(cls):
+    def tearDown(self):
         db.session.rollback()
         
         
@@ -90,16 +89,13 @@ class TestRoutes(TestCase):
             print(User.query.all())
             
     def test_post_insert(self):
-        # post=Post(title="Second Post",author=1,content="Second post content")
-        # db.session.add(post)
-        # db.session.commit()
         with app.test_client() as client:
             res=client.post('/users/1/posts/new', data={'title': 'Second Post','author':'1','content':'Second post content'},follow_redirects=True)
             html=res.get_data(as_text=True)
             
             self.assertEqual(res.status_code,200)
-            self.assertIn('First post content', html)
-            self.assertIn('Second post content', html)
+            self.assertIn('First Post', html)
+            self.assertIn('Second Post', html)
     
             print("***************** 6 test post insert, but user is")
             print(User.query.all())
