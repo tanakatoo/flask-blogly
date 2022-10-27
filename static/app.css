@@ -6,7 +6,7 @@ img {
 }
 
 
-a.userLinks,a.userLinks:visited{
+a.userLinks,a.userLinks:visited, a.userLinks:hover{
     color: blue;
 }
 

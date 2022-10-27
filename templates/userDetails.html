@@ -14,16 +14,19 @@
             <form action="/users/{{user.id}}/delete" method="POST">
                 <button class="btn btn-danger ">Delete</button>
             </form>
-            {% if posts %}
+
             <div class="row">
-                <h2>Posts</h2>
-                <ul>
-                    {% for p in posts %}
-                    <li>{{posts.title}}</li>
-                    {% endfor %}
-                </ul>
+                <div class="col">
+                    <h2>Posts</h2>
+                    <ul>
+                        {% for p in posts %}
+                        <li><a class="userLinks" href="/posts/{{p.id}}">{{p.title}}</a></li>
+                        {% endfor %}
+                    </ul>
+                    <button class="btn btn-primary"><a href="/users/{{user.id}}/posts/new">Add Post</a></button>
+                </div>
             </div>
-            {% endif %}
+
         </div>
     </div>
 </div>

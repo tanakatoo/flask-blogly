@@ -20,3 +20,5 @@ what others are there that we should know?
 testing:
 doesn't run in flask
 trying to setup in vscode, sometimes it runs sometimes it doesn't
+import app means importing what? The whole file? And after, I change the db, doesnt' look like the db is chnged
+

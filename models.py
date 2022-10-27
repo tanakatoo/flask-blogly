@@ -33,7 +33,7 @@ class User(db.Model):
     first_name=db.Column(db.String(50), 
                          nullable=False)
     last_name=db.Column(db.String(50))
-    image_url=db.Column(db.String)
+    image_url=db.Column(db.Text)
     
     @property
     def full_name(self):
@@ -45,7 +45,7 @@ class Post(db.Model):
     __tablename__="posts"
     
     def __repr__(self):
-        return f"<"
+        return f"<title:{self.title}, author:{self.author}>"
 
     id=db.Column(db.Integer,
                  primary_key=True,
@@ -53,7 +53,7 @@ class Post(db.Model):
     title=db.Column(db.Text,nullable=False)
     content=db.Column(db.Text,nullable=False)
     created_at=db.Column(db.DateTime, nullable=False, default=datetime.now())
-    author=db.Column(db.Integer, db.ForeignKey('users','id'))
+    author=db.Column(db.Integer, db.ForeignKey('users.id'))
     
     user=db.relationship('User', backref='posts')
     
