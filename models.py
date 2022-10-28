@@ -39,7 +39,7 @@ class User(db.Model):
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
   
-    
+    posts=db.relationship('Post',cascade='all, delete')
     
 class Post(db.Model):
     __tablename__="posts"
@@ -55,9 +55,29 @@ class Post(db.Model):
     created_at=db.Column(db.DateTime, nullable=False, default=datetime.now())
     author=db.Column(db.Integer, db.ForeignKey('users.id'))
     
-    user=db.relationship('User', backref='posts')
+    user=db.relationship('User')
+    
+    tags=db.relationship('Tag', secondary="posttags", cascade='all, delete',backref='posts')
     
     def get_all_posts(self):
         posts=User.posts.title
         return posts
+
+class Tag(db.Model):
+    __tablename__="tags"
     
+    def __repr__(self):
+        return f"<id={self.id}, name={self.name}"
+    
+    id=db.Column(db.Integer,autoincrement=True,primary_key=True)
+    name=db.Column(db.Text,nullable=False, unique=True)
+
+
+class PostTag(db.Model):
+    __tablename__="posttags"
+    
+    def __repr__(self):
+        return f"<post_id={self.post_id}, tag_id={self.tag_id}>"
+    
+    post_id= db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False,primary_key=True)
+    tag_id= db.Column(db.Integer,db.ForeignKey('tags.id'), nullable=False,primary_key=True)

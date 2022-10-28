@@ -8,7 +8,8 @@
     <li><a class="userLinks" href='/users/{{user.id}}'>{{user.full_name}}</a></li>
     {% endfor %}
 </ul>
-<form action="/users/new">
-    <button>Add Users</button>
-</form>
+
+<button class="btn btn-primary"><a href="/users/new"></a> Add Users</button>
+<button class="btn btn-primary"><a href="/">Home</a></button>
+
 {% endblock %}

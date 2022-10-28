@@ -8,6 +8,12 @@
             <h1>{{p.title}}</h1>
             <p>{{p.content}}</p>
             <p>By {{p.user.first_name}} {{p.user.last_name}}</p>
+
+            <p><b>Tags</b>
+                {% for t in tags %}
+                <button class="btn btn-primary btn-sm"><a href="/tags/{{t.id}}">{{t.name}}</a></button>
+                {% endfor %}
+            </p>
             <form action="/posts/{{p.id}}/delete" method="POST">
                 <input type="hidden" name="userid" value="{{p.user.id}}" />
                 <button class="btn btn-secondary"><a href="/users/{{p.user.id}}">Cancel</a></button>
