@@ -1,14 +1,14 @@
 from app import app
 from models import db, User,Post, Tag, PostTag
 
-db.drop_all()
+#db.drop_all()
 db.create_all()
 
 # empty all of the info
-User.query.delete()
-Tag.query.delete()
-PostTag.query.delete()
-Post.query.delete()
+# User.query.delete()
+# Tag.query.delete()
+# PostTag.query.delete()
+# Post.query.delete()
 
 u1=User(first_name="Karmen",last_name="Too",image_url="https://s0.2mdn.net/simgad/15022311863685636752")
 u2=User(first_name="Tim",last_name="BB",image_url="https://eloquentjavascript.net/img/chapter_picture_6.jpg")
@@ -36,3 +36,17 @@ db.session.add(p3)
 db.session.add(p4)
 db.session.commit()
 
+p1.tags.append(t1)
+p1.tags.append(t2)
+p2.tags.append(t1)
+p2.tags.append(t4)
+p3.tags.append(t3)
+p3.tags.append(t1)
+p4.tags.append(t3)
+p4.tags.append(t2)
+
+db.session.add(p1)
+db.session.add(p2)
+db.session.add(p3)
+db.session.add(p4)
+db.session.commit()

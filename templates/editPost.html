@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}Edit Post{% endblock %}
 {% block content %}
 <div class="container">
     <div class="row">
@@ -11,6 +11,17 @@
             <input type="text" name="title" value="{{p.title}}" class="form-control" />
             <label for="content" class="form-label">Post Content</label>
             <textarea name="content" value="{{p.content}}" rows="3" class="form-control">{{p.content}}</textarea>
+
+            {% for t in allTags %}
+
+            {%if t in tags %}
+            <input type="checkbox" id="check-{{t.id}}" name="tags" value="{{t.name}}" checked />
+            {% else %}
+            <input type="checkbox" id="check-{{t.id}}" name="tags" value="{{t.name}}" />
+            {% endif %}
+            <label for="check-{{t.id}}">{{t.name}}</label><br>
+            {% endfor %}
+
             <button class="btn btn-secondary" id="cancelBtn"><a href="/users/{{p.author}}">Cancel</a></button>
             <button class="btn btn-success" id="saveBtn">Save</button>
             <button class="btn btn-warning"><a href="/posts/{{p.id}}/edit">Reset</a></button>

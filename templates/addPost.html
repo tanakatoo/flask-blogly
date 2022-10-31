@@ -10,6 +10,12 @@
             <input type="text" name="title" class="form-control" />
             <label for="content" class="form-label">Content</label>
             <textarea name="content" class="form-control"></textarea>
+
+            {% for t in allTags %}
+            <input type="checkbox" id="check-{{t.id}}" name="tags" value="{{t.name}}" />
+            <label for="check-{{t.id}}">{{t.name}}</label><br>
+            {% endfor %}
+
             <button class="btn btn-secondary"><a href="/users/{{userid}}">Cancel</a></button>
             <button class="btn btn-success">Add</button>
         </form>
