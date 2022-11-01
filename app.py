@@ -103,11 +103,16 @@ def add_post(userid):
 
     content=request.form["content"]
     title=request.form["title"]
+    checkedTags=request.form.getlist('tags')
     # add the new post to db
+    t=Tag.query.filter(Tag.name.in_(checkedTags)).all()
+
     new_post=Post(title=title,content=content,author=userid)
+    for ta in t:
+        new_post.tags.append(ta)
     db.session.add(new_post)
     db.session.commit()
-    edit_add_post(new_post.id)
+    #edit_add_post(new_post.id)
     return redirect(url_for('user_details',userid=userid))
 
 @app.route('/posts/<int:postid>')
@@ -129,7 +134,16 @@ def edit_post(postid):
 
 @app.route('/posts/<int:postid>/edit', methods=["POST"])
 def edit_post_db(postid):
-    edit_add_post(postid)
+    # edit_add_post(postid)
+    title=request.form["title"]
+    content=request.form["content"]
+    checkedTags=request.form.getlist('tags')
+    p=Post.query.get(postid)
+    p.title=title
+    p.content=content
+    p.tags=Tag.query.filter(Tag.name.in_(checkedTags)).all()
+    db.session.add(p)
+    db.session.commit()
     return redirect(url_for('get_post',postid=postid))
 
 @app.route('/posts/<int:postid>/delete', methods=["POST"])
@@ -195,39 +209,41 @@ def edit_add_post(postid):
     title=request.form["title"]
     content=request.form["content"]
     checkedTags=request.form.getlist('tags') #gets list of the values of checkboxes that are checked only
+    
+    
     #tags_in_db=Post.query.get(postid).tags #gets all the tags objects in the db associated with post
-    all_tags_in_db=Tag.query.all()
+    # all_tags_in_db=Tag.query.all()
     # if the tag is still checked, leave it, otherwise, add it or remove it
-    print('********')
-    print(all_tags_in_db)
-    print(checkedTags)
-    for tag in all_tags_in_db: #for each tag in the db,
-        pt=PostTag.query.get([postid,tag.id]) #try to get the data from posttag table
-        print('********')
-        print(pt)
+    # print('********')
+    # print(all_tags_in_db)
+    # print(checkedTags)
+    # for tag in all_tags_in_db: #for each tag in the db,
+    #     pt=PostTag.query.get([postid,tag.id]) #try to get the data from posttag table
+    #     print('********')
+    #     print(pt)
         
-        if tag.name in checkedTags: #if it is checked, see if it is in the db
-            if not pt: #if it is not in the db
-                #add it to the db
-                print('********')
-                print('not in d but tag checked in form')
-                p=Post.query.get(postid)
-                p.tags.append(tag)
-                db.session.add(p)
-                db.session.commit()
-        elif not tag.name in checkedTags: #if it is not checked, see if it is in the db
-            if pt:
-                print('********')
-                print('in d but tag not checked in form')
-                PostTag.query.filter_by(post_id=postid,tag_id=tag.id).delete() #delete from db
-                db.session.commit()
+    #     if tag.name in checkedTags: #if it is checked, see if it is in the db
+    #         if not pt: #if it is not in the db
+    #             #add it to the db
+    #             print('********')
+    #             print('not in d but tag checked in form')
+    #             p=Post.query.get(postid)
+    #             p.tags.append(tag)
+    #             db.session.add(p)
+    #             db.session.commit()
+    #     elif not tag.name in checkedTags: #if it is not checked, see if it is in the db
+    #         if pt:
+    #             print('********')
+    #             print('in d but tag not checked in form')
+    #             PostTag.query.filter_by(post_id=postid,tag_id=tag.id).delete() #delete from db
+    #             db.session.commit()
   
     # code to edit post
     # get the post first
     p=Post.query.get(postid)
     p.title=title
     p.content=content
-    
+    p.tags=Tag.query.filter(Tag.id.in_(checkedTags)).all()
     db.session.add(p)
     db.session.commit()
     return 
